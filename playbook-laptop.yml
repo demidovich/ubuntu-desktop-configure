@@ -7,10 +7,9 @@
   gather_facts: no
   tasks:
 
-    - name: Remove brltty and laptop-mode-tools
+    - name: Remove laptop-mode-tools
       apt: 
         name:
-          - brltty
           - laptop-mode-tools
         state: absent
 

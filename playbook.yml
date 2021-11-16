@@ -18,6 +18,13 @@
         force_apt_get: yes
         cache_valid_time: 3600
 
+    - name: Remove unnecessary packages
+      apt: 
+        name:
+          - brltty
+          - apache2
+        state: absent
+
     - name: Install common packages
       apt: 
         name:
