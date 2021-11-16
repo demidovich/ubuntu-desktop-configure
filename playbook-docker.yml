@@ -59,7 +59,5 @@
 
     - name: Install docker-compose
       shell: |
-        cd /tmp
-        wget https://github.com/docker/compose/releases/download/v2.1.1/docker-compose-linux-x86_64
-        mv ./docker-compose-linux-x86_64 /usr/local/bin/docker-compose
+        curl -L "https://github.com/docker/compose/releases/download/2.1.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
