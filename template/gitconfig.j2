@@ -1,0 +1,24 @@
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    di = diff
+    plog = log --pretty=format:'%h %Cblue%cn %Creset%cr %Cgreen%s'
+    glog = log --oneline --graph
+    pflog = log --pretty=format:'%h %Cblue%cn %Creset%cr %Cgreen%s' --name-status
+    lsd = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    files = show --pretty="" --name-only
+[core]
+    whitespace = trailing-space, space-before-tab, cr-at-eol
+    editor = mcedit
+[color]
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+    ui = auto
+[merge]
+	tool = meld
+[diff]
+	guitool = meld

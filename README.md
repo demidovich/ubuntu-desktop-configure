@@ -10,6 +10,8 @@ sudo apt install git ansible
 Clone this repository.
 
 ```bash
+ansible-playbook ./playbook-user.yml
+
 sudo bash
 ansible-playbook ./playbook.yml
 ansible-playbook ./playbook-samba.yml

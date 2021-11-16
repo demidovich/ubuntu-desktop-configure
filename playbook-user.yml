@@ -1,0 +1,18 @@
+# playbook.yml:
+---
+- name: "Ubuntu user confgure playbook"
+  hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  tasks:
+
+    - name: Check existing .gitconfig
+      stat:
+        path: "~/.gitconfig"
+      register: st
+
+    - name: Add .gitconfig
+      template:
+        src: templates/gitconfig.j2
+        dest: ~/.gitconfig
+      when: not st.stat.exists

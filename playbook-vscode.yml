@@ -13,24 +13,18 @@
           - apt-transport-https
         state: latest
 
-    - name: Add microsoft repository
-      apt: 
-        shell: |
-          cd /tmp
-          wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-          sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-          sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-          rm -f packages.microsoft.gpg
-        state: latest
+    - name: Add microsoft signing key
+      apt_key:
+        url: "https://packages.microsoft.com/keys/microsoft.asc"
+        state: present
 
-    - name: Update apt
+    - name: Add vscode repository into sources list
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+        state: present
+
+    - name: Install vscode
       apt:
-        update_cache: yes
-        force_apt_get: yes
-        cache_valid_time: 3600
-
-    - name: Install visual studio code
-      apt: 
         name:
           - code
         state: latest
