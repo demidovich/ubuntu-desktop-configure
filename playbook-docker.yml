@@ -51,9 +51,10 @@
     - name: Install docker
       apt: 
         name:
+          - containerd.io
           - docker-ce
           - docker-ce-cli
-          - containerd.io
+          - docker-ctop
         state: latest
 
     - name: Create docker group
