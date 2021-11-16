@@ -1,13 +1,13 @@
 # playbook.yml:
 ---
-- name: "My ubuntu laptop playbook"
+- name: "Install docker"
   hosts: 127.0.0.1
   connection: local
   become: true
   gather_facts: no
   tasks:
 
-    - name: Remove apt docker
+    - name: Remove default docker packages
       apt: 
         name:
           - docker
@@ -17,7 +17,7 @@
           - runc
         state: absent
 
-    - name: Update apt repo and cache
+    - name: Update apt
       apt:
         update_cache: yes
         force_apt_get: yes
@@ -32,13 +32,13 @@
           - lsb-release
         state: latest
 
-    - name: Add docker repo
+    - name: Add docker repository
       shell: |
         echo \
         "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
         $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-    - name: Update apt repo and cache
+    - name: Update apt
       apt:
         update_cache: yes
         force_apt_get: yes
@@ -63,4 +63,3 @@
         wget https://github.com/docker/compose/releases/download/v2.1.1/docker-compose-linux-x86_64
         mv ./docker-compose-linux-x86_64 /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
-  

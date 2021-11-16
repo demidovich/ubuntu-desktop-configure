@@ -1,0 +1,23 @@
+# playbook.yml:
+---
+- name: "Ubuntu samba"
+  hosts: 127.0.0.1
+  connection: local
+  become: true
+  gather_facts: no
+  tasks:
+
+    - name: Install samba packages
+      apt: 
+        name:
+          - samba
+          - smbclient 
+          - gvfs 
+          - gvfs-backends 
+          - dbus-x11
+        state: latest
+
+    - name: Enabel samba firewall
+      shell: |
+        ufw enable
+        ufw allow samba

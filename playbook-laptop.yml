@@ -1,6 +1,6 @@
 # playbook.yml:
 ---
-- name: "My ubuntu laptop playbook"
+- name: "Ubuntu laptop optimizations"
   hosts: 127.0.0.1
   connection: local
   become: true
@@ -19,7 +19,7 @@
         repo: ppa:linuxuprising/apps
         state: present
   
-    - name: Update apt repo and cache
+    - name: Update apt
       apt:
         update_cache: yes
         force_apt_get: yes
