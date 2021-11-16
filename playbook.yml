@@ -16,25 +16,25 @@
     - name: Install common packages
       apt: 
         name:
-          - lsb-release
-          - ubuntu-restricted-extras
-          - net-tools
+          - alacarte
+          - ca-certificates
+          - firefox
+          - flameshot
+          - git-flow
+          - gnome-tweaks
           - htop
           - lnav
-          - nethogs
-          - ncdu
-          - pydf
-          - git-flow
+          - lsb-release
           - make
           - mc
-          - alacarte
-          - firefox
+          - ncdu
+          - net-tools
+          - nethogs
           - p7zip
-          - ca-certificates
-          - gnome-tweaks
+          - pydf
           - synaptic
+          - ubuntu-restricted-extras
           - unetbootin
-          - flameshot
           - vokoscreen
           - wget
         state: latest
