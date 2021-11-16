@@ -15,10 +15,10 @@
         state: absent
 
     - name: Add tlp repository
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: ppa:linuxuprising/apps
         state: present
-  
+
     - name: Update apt
       apt:
         update_cache: yes
@@ -31,6 +31,3 @@
           - tlp
           - tlpui
         state: latest
-
-
-  

@@ -7,18 +7,18 @@
   gather_facts: no
   tasks:
 
-    - name: Install backend packages
+    - name: Install requirements
       apt: 
         name:
           - apt-transport-https
         state: latest
 
-    - name: Add microsoft signing key
+    - name: Add microsoft apt key
       apt_key:
         url: "https://packages.microsoft.com/keys/microsoft.asc"
         state: present
 
-    - name: Add vscode repository into sources list
+    - name: Add vscode apt repository
       apt_repository:
         repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
         state: present

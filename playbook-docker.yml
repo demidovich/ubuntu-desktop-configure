@@ -4,7 +4,6 @@
   hosts: 127.0.0.1
   connection: local
   become: true
-  gather_facts: no
   tasks:
 
     - name: Remove default docker packages
@@ -26,9 +25,10 @@
     - name: Install requirements
       apt: 
         name:
+          - apt-transport-https
           - ca-certificates
           - curl
-          - gnupg
+          - gnupg2
           - lsb-release
         state: latest
 
@@ -37,9 +37,9 @@
        url: https://download.docker.com/linux/ubuntu/gpg
        state: present
 
-    - name: Add docker repository
+    - name: Add docker apt repository
       apt_repository:
-       repo: "deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+       repo: deb [arch=amd64] https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
        state: present
 
     - name: Update apt
@@ -56,12 +56,19 @@
           - containerd.io
         state: latest
 
-    - name: Add docker group
-      shell: |
-        groupadd docker
-        usermod -aG docker `logname`
+    - name: Create docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Adding user "{{ ansible_user_id }}" to group docker
+      user:
+        name: "{{ ansible_user_id }}"
+        groups: docker
+        append: yes
 
     - name: Install docker-compose
-      shell: |
-        curl -L "https://github.com/docker/compose/releases/download/2.1.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        chmod +x /usr/local/bin/docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.1.1/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
