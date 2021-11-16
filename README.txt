@@ -1,14 +1,12 @@
 # Ubuntu desktop
 
 Configure ubuntu desktop via ansible.
-
-```bash
+```
 sudo apt update
 sudo apt install git ansible
 ```
 
 Clone this repository.
-
 ```
 sudo bash
 ansible-playbook ./playbook.yml
