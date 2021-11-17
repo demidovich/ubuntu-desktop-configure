@@ -62,11 +62,8 @@
         name: docker
         state: present
 
-    - name: Adding user "{{ ansible_user_id }}" to group docker
-      user:
-        name: "{{ ansible_user_id }}"
-        groups: docker
-        append: yes
+    - name: Add current user into docker group
+      shell: usermod -aG docker `logname`
 
     - name: Install docker-compose
       get_url:
