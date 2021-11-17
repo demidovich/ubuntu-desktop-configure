@@ -1,7 +1,6 @@
-# playbook.yml:
 ---
 - name: "Install docker"
-  hosts: 127.0.0.1
+  hosts: "docker"
   connection: local
   become: true
   tasks:

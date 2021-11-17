@@ -1,7 +1,6 @@
-# playbook.yml:
 ---
 - name: "Ubuntu laptop optimizations"
-  hosts: 127.0.0.1
+  hosts: "laptop"
   connection: local
   become: true
   gather_facts: no

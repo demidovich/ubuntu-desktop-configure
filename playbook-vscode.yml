@@ -1,7 +1,7 @@
 # playbook.yml:
 ---
 - name: "Ubuntu visual studio code"
-  hosts: 127.0.0.1
+  hosts: "vscode"
   connection: local
   become: true
   gather_facts: no

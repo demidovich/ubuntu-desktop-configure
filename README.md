@@ -12,10 +12,12 @@ Clone this repository.
 ```bash
 ansible-playbook ./playbook-user.yml
 
+cp my.inventory.example my.inventory
+
 sudo bash
-ansible-playbook ./playbook.yml
-ansible-playbook ./playbook-samba.yml
-ansible-playbook ./playbook-docker.yml
-ansible-playbook ./playbook-vscode.yml
-ansible-playbook ./playbook-laptop.yml
+ansible-playbook -i ./my.inventory ./playbook-common.yml
+ansible-playbook -i ./my.inventory ./playbook-samba.yml
+ansible-playbook -i ./my.inventory ./playbook-docker.yml
+ansible-playbook -i ./my.inventory ./playbook-vscode.yml
+ansible-playbook -i ./my.inventory ./playbook-laptop.yml
 ```

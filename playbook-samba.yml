@@ -1,7 +1,6 @@
-# playbook.yml:
 ---
 - name: "Ubuntu samba"
-  hosts: 127.0.0.1
+  hosts: "samba"
   connection: local
   become: true
   gather_facts: no
@@ -17,7 +16,29 @@
           - dbus-x11
         state: latest
 
-    - name: Enabel samba firewall
-      shell: |
-        ufw enable
-        ufw allow samba
+    - name: Enable support old protocol
+      shell: "sed -i 's/^\[global\]/[global]\n client min protocol = NT1\n server min protocol = NT1/g' /etc/samba/smb.conf"
+
+    - name: Restart samba services
+      service:
+        name: {{ item }}
+        state: restarted
+      with_items:
+        - smbd
+        - nmbd
+
+    - name: Enable ufw
+      ufw:
+        state: enabled
+
+    - name: Allow samba
+      ufw:
+        rule: allow
+        name: Samba
+
+    - name: Allow samba for home networks
+      ufw:
+        rule: allow
+        name: Samba
+        src: "{{ item }}"
+      with_items: "{{ samba_networks }}"

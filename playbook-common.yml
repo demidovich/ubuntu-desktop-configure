@@ -1,7 +1,6 @@
-# playbook.yml:
 ---
 - name: "Ubuntu desktop playbook"
-  hosts: 127.0.0.1
+  hosts: "common"
   connection: local
   become: true
   gather_facts: no
@@ -51,7 +50,6 @@
           - wget
         state: latest
 
-    - name: Enabel firewall
-      shell: |
-        ufw enable
-
+    - name: Enabel ufw
+      ufw:
+        state: enabled
