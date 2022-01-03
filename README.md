@@ -18,6 +18,7 @@ sudo bash
 ansible-playbook -i ./my.inventory ./playbook-common.yml
 ansible-playbook -i ./my.inventory ./playbook-samba.yml
 ansible-playbook -i ./my.inventory ./playbook-docker.yml
+ansible-playbook -i ./my.inventory ./playbook-golang.yml
 ansible-playbook -i ./my.inventory ./playbook-vscode.yml
 ansible-playbook -i ./my.inventory ./playbook-laptop.yml
 ```
