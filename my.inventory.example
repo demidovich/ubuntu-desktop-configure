@@ -12,3 +12,6 @@
 
 [vscode]
 127.0.0.1
+
+[reaper]
+127.0.0.1 reaper_version="643"

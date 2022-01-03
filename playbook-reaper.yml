@@ -1,0 +1,43 @@
+# playbook.yml:
+---
+- name: "Ubuntu reaper"
+  hosts: "reaper"
+  connection: local
+  become: true
+  gather_facts: no
+  tasks:
+
+    - name: Define reaper version
+      set_fact:
+        reaper_version: "{{ reaper_version | default('643') }}"
+
+    - name: Define reaper archive name
+      set_fact:
+        reaper_archive: "reaper{{ reaper_version }}_linux_x86_64.tar.xz"
+
+    - name: Install requirements
+      apt: 
+        name:
+          - qjackctl
+        state: latest
+
+    - name: Download reaper {{ reaper_archive }}
+      get_url:
+        url: https://www.reaper.fm/files/6.x/{{ reaper_archive }}
+        dest: /tmp
+        mode: 0660
+
+    - name: Extract {{ reaper_archive }}
+      unarchive:
+        src: "/tmp/{{ reaper_archive }}"
+        dest: /tmp
+        copy: no
+
+    - name: Install Reaper
+      shell: |
+        cd /tmp/reaper_linux_x86_64 && \
+        sh install-reaper.sh \
+          --install "/opt" \
+          --quiet \
+          --integrate-desktop \
+          --usr-local-bin-symlink
