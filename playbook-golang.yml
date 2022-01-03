@@ -25,7 +25,7 @@
       get_url:
         url: https://go.dev/dl/go{{ golang_version }}.linux-amd64.tar.gz
         dest: /tmp
-        mode: 0440
+        mode: 0660
 
     - name: Remove old installation
       file:
@@ -37,11 +37,6 @@
         src: "/tmp/go{{ golang_version }}.linux-amd64.tar.gz"
         dest: /usr/local
         copy: no
-
-    # - name: Install golang {{ golang_version }}
-    #   shell: rm -rf /usr/local/go && tar -C /usr/local -xzf /tmp/go{{ golang_version }}.linux-amd64.tar.gz
-    #   args:
-    #     warn: false
 
     - name: Create Golang directories in the {{ golang_home }}
       file:
@@ -65,3 +60,8 @@
         marker: '# {mark} ANSIBLE MANAGED BLOCK - Golang'
         insertafter: EOF
         create: yes
+
+    - name: Remove installation archive
+      file:
+        path: /tmp/go{{ golang_version }}.linux-amd64.tar.gz
+        state: absent
