@@ -1,0 +1,27 @@
+# playbook.yml:
+---
+- name: "Ubuntu virtualbox"
+  hosts: "virtualbox"
+  connection: local
+  become: true
+  gather_facts: yes
+  vars:
+    golang_user: "{{ ansible_facts['env']['SUDO_USER'] }}"
+    golang_home: "/home/{{ golang_user }}"
+  tasks:
+
+    - name: Update apt
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+    - name: Install virtualbox
+      apt: 
+        name:
+          - virtualbox
+          - virtualbox-ext-pack
+        state: latest
+
+    - name: Add current user into vboxusers group
+      shell: usermod -aG vboxusers `logname`

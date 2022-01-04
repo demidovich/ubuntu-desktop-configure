@@ -15,3 +15,6 @@
 
 [reaper]
 127.0.0.1 reaper_version="643"
+
+[virtualbox]
+127.0.0.1

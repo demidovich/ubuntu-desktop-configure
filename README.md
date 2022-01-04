@@ -23,6 +23,7 @@ ansible-playbook -i ./my.inventory ./playbook-golang.yml
 ansible-playbook -i ./my.inventory ./playbook-vscode.yml
 ansible-playbook -i ./my.inventory ./playbook-laptop.yml
 ansible-playbook -i ./my.inventory ./playbook-reaper.yml
+ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
 ```
 
 ### Golang source
