@@ -1,0 +1,76 @@
+# playbook.yml:
+---
+- name: "Ubuntu golang"
+  hosts: "golang"
+  connection: local
+  become: true
+  gather_facts: yes
+  vars:
+    golang_user: "{{ ansible_facts['env']['SUDO_USER'] }}"
+    golang_home: "/home/{{ golang_user }}"
+  tasks:
+
+    - name: Define variables
+      set_fact:
+        golang_version: "{{ golang_version | default('1.17.5') }}"
+
+    - name: Debug
+      debug: 
+        msg:
+        - "User: {{ golang_user }}"
+        - "Home: {{ golang_home }}"
+        - "Version: {{ golang_version }}"
+
+    - name: Remove old installation from source
+      file:
+        path: /usr/local/go
+        state: absent
+
+    - name: Remove old installation from apt
+      apt: 
+        name:
+          - golang
+          - golang-go
+        state: absent
+
+    - name: Download golang {{ golang_version }}
+      get_url:
+        url: https://go.dev/dl/go{{ golang_version }}.linux-amd64.tar.gz
+        dest: /tmp
+        mode: 0660
+
+    - name: Extract archive /tmp/go{{ golang_version }}.linux-amd64.tar.gz
+      unarchive:
+        src: "/tmp/go{{ golang_version }}.linux-amd64.tar.gz"
+        dest: /usr/local
+        copy: no
+
+    - name: Create Golang directories in the {{ golang_home }}
+      file:
+        path: "{{ item }}"
+        state: directory
+        recurse: yes
+        owner: "{{ golang_user }}"
+        group: "{{ golang_user }}"
+        mode: "0755"
+      loop:
+        - "{{ golang_home }}/go/bin"
+        - "{{ golang_home }}/go/src"
+
+    - name: Modify .bashrc in the {{ golang_home }}
+      blockinfile:
+        dest: "{{ golang_home }}/.bashrc"
+        block: |
+          export GOROOT=/usr/local/go
+          export GOPATH=$HOME/go
+          export GOBIN=$GOPATH/bin
+          export PATH=$PATH:$GOBIN:$GOROOT/bin
+        marker: '# {mark} ANSIBLE MANAGED BLOCK - Golang'
+        insertafter: EOF
+        create: yes
+        state: present
+
+    - name: Remove installation archive
+      file:
+        path: /tmp/go{{ golang_version }}.linux-amd64.tar.gz
+        state: absent
