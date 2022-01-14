@@ -17,11 +17,12 @@
         state: latest
 
     - name: Enable support old protocol
-      shell: "sed -i 's/^\[global\]/[global]\n client min protocol = NT1\n server min protocol = NT1/g' /etc/samba/smb.conf"
+      shell: |
+        sed -i 's/^\[global\]/[global]\n client min protocol = NT1\n server min protocol = NT1/g' /etc/samba/smb.conf
 
     - name: Restart samba services
       service:
-        name: {{ item }}
+        name: "{{ item }}"
         state: restarted
       with_items:
         - smbd
