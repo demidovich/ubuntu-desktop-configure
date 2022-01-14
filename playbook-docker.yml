@@ -41,6 +41,16 @@
        repo: deb [arch=amd64] https://download.docker.com/{{ ansible_system | lower }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
        state: present
 
+    - name: Add docker-ctop gpg apt key
+      apt_key:
+       url: https://azlux.fr/repo.gpg.key
+       state: present
+
+    - name: Add docker-ctop apt repository
+      apt_repository:
+       repo: deb http://packages.azlux.fr/debian/ buster main
+       state: present
+
     - name: Update apt
       apt:
         update_cache: yes
