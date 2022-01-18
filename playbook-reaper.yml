@@ -41,3 +41,6 @@
           --quiet \
           --integrate-desktop \
           --usr-local-bin-symlink
+
+    - name: Add current user into audio group
+      shell: usermod -aG audio `logname`
