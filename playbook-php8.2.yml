@@ -1,0 +1,32 @@
+# playbook.yml:
+---
+- name: "PHP 8.2"
+  hosts: "vscode"
+  connection: local
+  become: true
+  gather_facts: yes
+  tasks:
+
+    - name: Install requirements
+      apt: 
+        name:
+          - software-properties-common
+        state: latest
+
+    - name: Add apt repository
+      apt_repository:
+        repo: ppa:ondrej/php
+        state: present
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install php
+      apt:
+        name:
+          - nginx
+          - php8.2
+          - php8.2-cli
+          - php8.2-fpm
+          - php8.2-opcache
+          - php8.2-readline
+        state: latest
