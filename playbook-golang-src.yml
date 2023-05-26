@@ -5,9 +5,11 @@
   connection: local
   become: true
   gather_facts: yes
+
   vars:
-    golang_user: "{{ ansible_facts['env']['SUDO_USER'] }}"
-    golang_home: "/home/{{ golang_user }}"
+    user_name: "{{ ansible_env.SUDO_USER }}"
+    user_home: "/home/{{ ansible_env.SUDO_USER }}"
+
   tasks:
 
     - name: Define variables
@@ -17,8 +19,8 @@
     - name: Debug
       debug: 
         msg:
-        - "User: {{ golang_user }}"
-        - "Home: {{ golang_home }}"
+        - "User: {{ user_name }}"
+        - "Home: {{ user_home }}"
         - "Version: {{ golang_version }}"
 
     - name: Remove old installation from source
@@ -45,21 +47,21 @@
         dest: /usr/local
         copy: no
 
-    - name: Create Golang directories in the {{ golang_home }}
+    - name: Create Golang directories in the {{ user_home }}
       file:
         path: "{{ item }}"
         state: directory
         recurse: yes
-        owner: "{{ golang_user }}"
-        group: "{{ golang_user }}"
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
         mode: "0755"
       loop:
-        - "{{ golang_home }}/go/bin"
-        - "{{ golang_home }}/go/src"
+        - "{{ user_home }}/go/bin"
+        - "{{ user_home }}/go/src"
 
-    - name: Modify .bashrc in the {{ golang_home }}
+    - name: Modify .bashrc in the {{ user_home }}
       blockinfile:
-        dest: "{{ golang_home }}/.bashrc"
+        dest: "{{ user_home }}/.bashrc"
         block: |
           export GOROOT=/usr/local/go
           export GOPATH=$HOME/go
