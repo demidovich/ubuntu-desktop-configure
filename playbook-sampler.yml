@@ -1,0 +1,41 @@
+# https://github.com/sqshq/sampler
+# sampler -c ~/.sampler/example.yml
+
+---
+- name: "Ubuntu sampler"
+  hosts: "sampler"
+  connection: local
+  become: true
+  gather_facts: yes
+
+  vars:
+    user_name: "{{ ansible_env.SUDO_USER }}"
+    config_dir: "/home/{{ ansible_env.SUDO_USER }}/.sampler"
+
+  tasks:
+
+    - name: Install sampler
+      shell: |
+        wget https://github.com/sqshq/sampler/releases/download/v1.1.0/sampler-1.1.0-linux-amd64 -O /usr/local/bin/sampler
+        chmod +x /usr/local/bin/sampler
+        mkdir -p /home/`logname`
+
+    - name: "Check directory {{ config_dir }}"
+      stat:
+        path: "{{ config_dir }}"
+      register: st
+
+    - name: "Create directory {{ config_dir }}"
+      file:
+        path: "{{ config_dir }}"
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+      when: not st.stat.exists
+
+    - name: "Create {{ config_dir }}/example.yml"
+      template:
+        src: templates/sampler-example.yml.j2
+        dest: "{{ config_dir }}/example.yml"
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"

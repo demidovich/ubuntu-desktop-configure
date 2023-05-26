@@ -1,0 +1,18 @@
+runcharts:
+  - title: Servers latency
+    position: [[0, 0], [57, 20]]
+    rate-ms: 1000
+    legend:
+        enabled: true
+        details: false
+    scale: 2
+    items:
+      - label: GOOGLE
+        color: 178
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://google.com
+      - label: YANDEX
+        color: 30
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://ya.ru
+      - label: VK
+        sample: curl -o /dev/null -s -w '%{time_total}'  https://vk.com
+
