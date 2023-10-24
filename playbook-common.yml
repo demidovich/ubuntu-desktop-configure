@@ -48,6 +48,7 @@
           - unetbootin
           - vokoscreen
           - wget
+          - tigervnc-viewer
         state: latest
 
     - name: Enabel ufw
