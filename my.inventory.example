@@ -13,11 +13,14 @@
 [vscode]
 127.0.0.1
 
-[reaper]
-127.0.0.1 reaper_version="643"
-
 [virtualbox]
 127.0.0.1
 
 [php8.2]
 127.0.0.1
+
+[reaper]
+127.0.0.1 reaper_version="643"
+
+[vst-support]
+127.0.0.1 yabridge_version="5.1.0"

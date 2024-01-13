@@ -22,7 +22,6 @@ ansible-playbook -i ./my.inventory ./playbook-docker.yml
 ansible-playbook -i ./my.inventory ./playbook-golang.yml
 ansible-playbook -i ./my.inventory ./playbook-vscode.yml
 ansible-playbook -i ./my.inventory ./playbook-laptop.yml
-ansible-playbook -i ./my.inventory ./playbook-reaper.yml
 ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
 ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
 ansible-playbook -i ./my.inventory ./playbook-sampler.yml
@@ -32,6 +31,15 @@ ansible-playbook -i ./my.inventory ./playbook-sampler.yml
 
 Install Golang from source.
 
-```
+```bash
+
 ansible-playbook -i ./my.inventory ./playbook-golang-src.yml
+```
+
+### Music soft
+
+```bash
+
+ansible-playbook -i ./my.inventory ./playbook-reaper.yml
+ansible-playbook -i ./my.inventory ./playbook-vst-support.yml
 ```

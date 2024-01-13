@@ -1,0 +1,76 @@
+# playbook.yml:
+---
+- name: "VST plugins support"
+  hosts: "vst-support"
+  connection: local
+  become: true
+  gather_facts: yes
+
+  vars:
+    user_name: "{{ ansible_env.SUDO_USER }}"
+    user_home: "/home/{{ ansible_env.SUDO_USER }}"
+
+  tasks:
+
+    - name: Define variables
+      set_fact:
+        yabridge_version: "{{ yabridge_version | default('5.1.0') }}"
+
+    - name: Debug
+      debug: 
+        msg:
+        - "User: {{ user_name }}"
+        - "Home: {{ user_home }}"
+        - "Version: {{ yabridge_version }}"
+
+    # https://wiki.winehq.org/Ubuntu
+
+    - name: Create keyring directory
+      file:
+        path: /etc/apt/keyrings
+        mode: "0755"
+        state: directory
+
+    - name: Install wine apt key
+      get_url:
+        url: https://dl.winehq.org/wine-builds/winehq.key
+        dest: /etc/apt/keyrings/winehq-archive.key
+        mode: 0660
+
+    - name: Update apt
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install wine-hq
+      apt: 
+        name:
+          - winehq-staging
+        install_recommends: true
+        state: latest
+
+    # https://github.com/robbert-vdh/yabridge
+
+    - name: Download yabridge {{ yabridge_version }}
+      get_url:
+        url: https://github.com/robbert-vdh/yabridge/releases/download/{{ yabridge_version }}/yabridge-{{ yabridge_version }}.tar.gz
+        dest: /tmp/yabridge-{{ yabridge_version }}.tar.gz
+        mode: 0660
+
+    - name: Extract yabridge
+      unarchive:
+        src: /tmp/yabridge-{{ yabridge_version }}.tar.gz
+        dest: "{{ user_home }}/.local/share"
+        copy: no
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+
+    - name: Modify .bashrc
+      blockinfile:
+        dest: "{{ user_home }}/.bashrc"
+        block: |
+          export PATH=$PATH:{{ user_home }}/.local/share/yabridge
+        marker: '# {mark} ANSIBLE MANAGED BLOCK - Yabridge'
+        insertafter: EOF
+        create: yes
+        state: present
