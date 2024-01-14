@@ -1,7 +1,7 @@
 # playbook.yml:
 ---
-- name: "Ubuntu reaper"
-  hosts: "reaper"
+- name: "Soundrecord reaper"
+  hosts: "soundrecord-reaper"
   connection: local
   become: true
   gather_facts: no

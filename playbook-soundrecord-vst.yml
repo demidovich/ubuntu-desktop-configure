@@ -1,7 +1,7 @@
 # playbook.yml:
 ---
-- name: "VST plugins support"
-  hosts: "vst-support"
+- name: "Soundrecord VST plugins support"
+  hosts: "soundrecord-vst"
   connection: local
   become: true
   gather_facts: yes

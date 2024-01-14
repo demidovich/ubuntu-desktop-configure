@@ -19,8 +19,11 @@
 [php8.2]
 127.0.0.1
 
-[reaper]
+[soundrecord-reaper]
 127.0.0.1 reaper_version="643"
 
-[vst-support]
+[soundrecord-vst]
 127.0.0.1 yabridge_version="5.1.0"
+
+[soundrecord-realtime]
+127.0.0.1

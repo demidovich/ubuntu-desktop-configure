@@ -1,0 +1,21 @@
+# playbook.yml:
+---
+- name: "Soundrecord realtime"
+  hosts: "soundrecord-realtime"
+  connection: local
+  become: true
+  gather_facts: yes
+
+  tasks:
+
+    - name: Update apt
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install latest lowlatincy kernel and cadence
+      apt: 
+        name:
+          - linux-lowlatency
+          - cadence
+        state: latest
