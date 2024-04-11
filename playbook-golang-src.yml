@@ -76,3 +76,18 @@
       file:
         path: /tmp/go{{ golang_version }}.linux-amd64.tar.gz
         state: absent
+
+    - name: Install tools
+      shell: |
+        export GOROOT=/usr/local/go
+        export GOPATH=$HOME/go
+        export GOBIN=$GOPATH/bin
+        export PATH=$PATH:$GOBIN:$GOROOT/bin
+        go install golang.org/x/tools/gopls@latest
+        go install golang.org/x/tools/cmd/goimports@latest
+        go install github.com/rogpeppe/godef@latest
+        go install github.com/lukehoban/go-find-references@latest
+        go install github.com/lukehoban/go-outline@latest
+        go install golang.org/x/tools/cmd/gorename@latest
+        go install github.com/newhook/go-symbols@latest
+
