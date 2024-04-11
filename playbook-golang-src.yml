@@ -14,7 +14,7 @@
 
     - name: Define variables
       set_fact:
-        golang_version: "{{ golang_version | default('1.17.5') }}"
+        golang_version: "{{ golang_version | default('1.21.7') }}"
 
     - name: Debug
       debug: 
