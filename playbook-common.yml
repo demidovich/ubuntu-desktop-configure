@@ -6,11 +6,6 @@
   gather_facts: no
   tasks:
 
-    - name: Add unetbootin repository into sources list
-      apt_repository:
-        repo: ppa:gezakovacs/ppa
-        state: present
-
     - name: Update apt
       apt:
         update_cache: yes
@@ -44,7 +39,6 @@
           - pydf
           - synaptic
           - ubuntu-restricted-extras
-          - unetbootin
           - vokoscreen
           - wget
           - tigervnc-viewer

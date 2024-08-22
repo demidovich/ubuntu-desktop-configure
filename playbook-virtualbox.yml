@@ -5,15 +5,19 @@
   connection: local
   become: true
   gather_facts: yes
+
+  vars:
+    virtualbox_user: "{{ ansible_facts['env']['SUDO_USER'] }}"
+  
   tasks:
 
     - name: Install virtualbox
       expect:
-        command: apt-get install virtualbox virtualbox-ext-pack
+        command: apt-get --yes --force-yes install virtualbox virtualbox-ext-pack
         responses:
           Question:
             - 'Y'
             - 'n'
 
     - name: Add current user into vboxusers group
-      shell: usermod -aG vboxusers `logname`
+      shell: usermod -aG vboxusers {{ virtualbox_user }}
