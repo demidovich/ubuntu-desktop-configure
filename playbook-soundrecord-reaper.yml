@@ -9,21 +9,18 @@
 
     - name: Define reaper version
       set_fact:
-        reaper_version: "{{ reaper_version | default('643') }}"
-
-    - name: Define reaper archive name
-      set_fact:
+        reaper_version: "{{ reaper_version | default('720') }}"
         reaper_archive: "reaper{{ reaper_version }}_linux_x86_64.tar.xz"
 
-    - name: Install requirements
-      apt: 
-        name:
-          - qjackctl
-        state: latest
+    # - name: Install requirements
+    #   apt: 
+    #     name:
+    #       - qjackctl
+    #     state: latest
 
-    - name: Download reaper {{ reaper_archive }}
+    - name: Download {{ reaper_archive }}
       get_url:
-        url: https://www.reaper.fm/files/6.x/{{ reaper_archive }}
+        url: https://www.reaper.fm/files/7.x/{{ reaper_archive }}
         dest: /tmp
         mode: 0660
 

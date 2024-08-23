@@ -23,10 +23,10 @@
 127.0.0.1
 
 [sound-pipewire]
-127.0.0.1 reaper_version="643"
+127.0.0.1
 
 [soundrecord-reaper]
-127.0.0.1 reaper_version="643"
+127.0.0.1 reaper_version="720"
 
 [soundrecord-vst]
 127.0.0.1 yabridge_version="5.1.0"
