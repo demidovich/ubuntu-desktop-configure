@@ -21,7 +21,7 @@
         msg:
         - "User: {{ user_name }}"
         - "Home: {{ user_home }}"
-        - "Version: {{ yabridge_version }}"
+        - "Yabridge Version: {{ yabridge_version }}"
 
     # https://wiki.winehq.org/Ubuntu
 
@@ -35,12 +35,21 @@
       get_url:
         url: https://dl.winehq.org/wine-builds/winehq.key
         dest: /etc/apt/keyrings/winehq-archive.key
-        mode: 0660
+        mode: 0644
+
+    - name: Install wine apt repository
+      get_url:
+        url: https://dl.winehq.org/wine-builds/{{ ansible_distribution | lower }}/dists/{{ ansible_distribution_release | lower }}/winehq-{{ ansible_distribution_release | lower }}.sources
+        dest: /etc/apt/sources.list.d/winehq-{{ ansible_distribution_release | lower }}.sources
+        mode: 0644
 
     - name: Update apt
       apt:
         update_cache: yes
         cache_valid_time: 3600
+
+    - name: Enable i386 arch
+      shell: dpkg --add-architecture i386
 
     - name: Install wine-hq
       apt: 
@@ -49,7 +58,7 @@
         install_recommends: true
         state: latest
 
-    # https://github.com/robbert-vdh/yabridge
+    # # https://github.com/robbert-vdh/yabridge
 
     - name: Download yabridge {{ yabridge_version }}
       get_url:
