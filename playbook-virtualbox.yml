@@ -13,7 +13,7 @@
 
     - name: Install virtualbox
       expect:
-        command: apt-get --yes --force-yes install virtualbox virtualbox-ext-pack
+        command: apt-get --yes --force-yes install virtualbox virtualbox-ext-pack virtualbox-guest-additions-iso
         responses:
           Question:
             - 'Y'
