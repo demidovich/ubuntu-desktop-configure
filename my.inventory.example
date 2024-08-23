@@ -33,3 +33,6 @@
 
 [soundrecord-realtime]
 127.0.0.1
+
+[yandex-disk]
+127.0.0.1
