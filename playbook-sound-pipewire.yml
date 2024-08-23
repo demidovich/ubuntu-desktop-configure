@@ -1,0 +1,42 @@
+# https://github.com/sqshq/sampler
+# sampler -c ~/.sampler/example.yml
+
+---
+- name: "Pipewire"
+  hosts: "sound-pipewire"
+  connection: local
+  become: true
+  gather_facts: yes
+
+  vars:
+    user_name: "{{ ansible_env.SUDO_USER }}"
+    config_dir: "/home/{{ ansible_env.SUDO_USER }}/.config/pipewire/pipewire.conf.d"
+
+  tasks:
+
+    - name: "Check config directory {{ config_dir }}"
+      stat:
+        path: "{{ config_dir }}"
+      register: st
+
+    - name: "Create config directory {{ config_dir }}"
+      file:
+        path: "{{ config_dir }}"
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+      when: not st.stat.exists
+
+    - name: "Create {{ config_dir }}/10-default-clock-rate.conf"
+      template:
+        src: templates/sound-pipewire/10-default-clock-rate.conf.j2
+        dest: "{{ config_dir }}/10-default-clock-rate.conf"
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+
+    - name: "Create {{ config_dir }}/20-default-resample.conf"
+      template:
+        src: templates/sound-pipewire/20-default-resample.conf.j2
+        dest: "{{ config_dir }}/20-default-resample.conf"
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"

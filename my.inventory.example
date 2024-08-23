@@ -22,6 +22,9 @@
 [php8.2]
 127.0.0.1
 
+[sound-pipewire]
+127.0.0.1 reaper_version="643"
+
 [soundrecord-reaper]
 127.0.0.1 reaper_version="643"
 

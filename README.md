@@ -26,6 +26,7 @@ ansible-playbook -i ./my.inventory ./playbook-laptop.yml
 ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
 ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
 ansible-playbook -i ./my.inventory ./playbook-sampler.yml
+ansible-playbook -i ./my.inventory ./playbook-sound-pipewire.yml
 ```
 
 ### Golang
