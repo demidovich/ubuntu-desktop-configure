@@ -42,6 +42,7 @@
           - vokoscreen
           - wget
           - tigervnc-viewer
+          - fonts-ubuntu-classic
         state: latest
 
     - name: Enabel ufw
