@@ -1,0 +1,25 @@
+---
+- name: "Ubuntu firewall playbook"
+  hosts: "ufw"
+  connection: local
+  become: true
+  gather_facts: no
+  tasks:
+
+    - name: Reset ufw
+      ufw:
+        state: reset
+
+    - name: Default incoming policy
+      ufw:
+        direction: in
+        rule: deny
+
+    - name: Default outgoing policy
+      ufw:
+        direction: out
+        rule: allow
+
+    - name: Enable ufw
+      ufw:
+        state: enabled
