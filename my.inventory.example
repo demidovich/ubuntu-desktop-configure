@@ -23,7 +23,7 @@
 127.0.0.1
 
 [sound-pipewire]
-127.0.0.1
+127.0.0.1 pipeware_sample_rate="44100" pipeware_jack_buffer_size="256"
 
 [soundrecord-reaper]
 127.0.0.1 reaper_version="720"

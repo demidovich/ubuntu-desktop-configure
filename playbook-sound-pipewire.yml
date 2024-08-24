@@ -9,34 +9,84 @@
   gather_facts: yes
 
   vars:
-    user_name: "{{ ansible_env.SUDO_USER }}"
-    config_dir: "/home/{{ ansible_env.SUDO_USER }}/.config/pipewire/pipewire.conf.d"
+    pipewire_user: "{{ ansible_env.SUDO_USER }}"
+    pipewire_config_dir: "/home/{{ ansible_env.SUDO_USER }}/.config/pipewire"
+    pipewire_confd_dir: "{{ pipewire_config_dir }}/pipewire.conf.d"
+    pipewire_jack_confd_dir: "{{ pipewire_config_dir }}/jack.conf.d"
 
   tasks:
 
-    - name: "Check config directory {{ config_dir }}"
-      stat:
-        path: "{{ config_dir }}"
-      register: st
+    - name: Define variables
+      set_fact:
+        pipeware_sample_rate: "{{ pipeware_sample_rate | default('44100') }}"
+        pipeware_jack_buffer_size: "{{ pipeware_jack_buffer_size | default('256') }}"
 
-    - name: "Create config directory {{ config_dir }}"
-      file:
-        path: "{{ config_dir }}"
-        state: directory
-        owner: "{{ user_name }}"
-        group: "{{ user_name }}"
-      when: not st.stat.exists
+    # # Host settings
 
-    - name: "Create {{ config_dir }}/10-default-clock-rate.conf"
-      template:
-        src: templates/sound-pipewire/10-default-clock-rate.conf.j2
-        dest: "{{ config_dir }}/10-default-clock-rate.conf"
-        owner: "{{ user_name }}"
-        group: "{{ user_name }}"
+    # - name: Create audio group
+    #   group:
+    #     name: audio
+    #     state: present
 
-    - name: "Create {{ config_dir }}/20-default-resample.conf"
-      template:
-        src: templates/sound-pipewire/20-default-resample.conf.j2
-        dest: "{{ config_dir }}/20-default-resample.conf"
-        owner: "{{ user_name }}"
-        group: "{{ user_name }}"
+    # - name: Add {{ pipewire_user }} into audio group
+    #   shell: usermod -aG docker {{ pipewire_user }}
+
+    # - name: "Add limits for audio group"
+    #   template:
+    #     src: templates/sound-pipewire/limits.d/audio.conf.j2
+    #     dest: /etc/security/limits.d/audio.conf
+
+    # Make 4 from https://github.com/chmaha/DebianProAudio
+
+    # Packages
+
+    - name: Install pipewire client packages
+      apt: 
+        name:
+          - pipewire-alsa
+          - pipewire-jack
+          - pipewire-audio-client-libraries
+        state: present
+
+    # Global config
+
+    - name: "Create config files {{ pipewire_confd_dir }}"
+      block:
+      - name: "Create directory {{ pipewire_confd_dir }}"
+        file:
+          path: "{{ pipewire_confd_dir }}"
+          state: directory
+          owner: "{{ pipewire_user }}"
+          group: "{{ pipewire_user }}"
+
+      - name: "Create {{ pipewire_confd_dir }}/10-clock-rate.conf"
+        template:
+          src: templates/sound-pipewire/pipewire.conf.d/10-clock-rate.conf.j2
+          dest: "{{ pipewire_confd_dir }}/10-clock-rate.conf"
+          owner: "{{ pipewire_user }}"
+          group: "{{ pipewire_user }}"
+
+      - name: "Create {{ pipewire_confd_dir }}/20-resample.conf"
+        template:
+          src: templates/sound-pipewire/pipewire.conf.d/20-resample.conf.j2
+          dest: "{{ pipewire_confd_dir }}/20-resample.conf"
+          owner: "{{ pipewire_user }}"
+          group: "{{ pipewire_user }}"
+
+    # JACK config
+
+    - name: "Create config files {{ pipewire_jack_confd_dir }}"
+      block:
+      - name: "Create directory {{ pipewire_jack_confd_dir }}"
+        file:
+          path: "{{ pipewire_jack_confd_dir }}"
+          state: directory
+          owner: "{{ pipewire_user }}"
+          group: "{{ pipewire_user }}"
+
+      - name: "Create {{ pipewire_jack_confd_dir }}/10-jack.conf"
+        template:
+          src: templates/sound-pipewire/jack.conf.d/10-jack.conf.j2
+          dest: "{{ pipewire_jack_confd_dir }}/10-jack.conf"
+          owner: "{{ pipewire_user }}"
+          group: "{{ pipewire_user }}"

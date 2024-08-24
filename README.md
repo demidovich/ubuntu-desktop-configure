@@ -24,7 +24,6 @@ sudo ansible-playbook -i ./my.inventory ./playbook-laptop.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-sampler.yml
-sudo ansible-playbook -i ./my.inventory ./playbook-sound-pipewire.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-yandex-disk.yml
 ```
 
@@ -35,7 +34,15 @@ sudo ansible-playbook -i ./my.inventory ./playbook-yandex-disk.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-golang-src.yml
 ```
 
-### Sound recording
+### Sound pipeware
+
+```bash
+sudo ansible-playbook -i ./my.inventory ./playbook-sound-pipewire.yml
+
+systemctl --user restart pipewire.service pipewire-pulse.socket
+```
+
+### Soundrecord
 
 ```bash
 
