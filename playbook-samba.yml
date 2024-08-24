@@ -28,18 +28,13 @@
         - smbd
         - nmbd
 
-    - name: Enable ufw
-      ufw:
-        state: enabled
-
-    - name: Allow samba
-      ufw:
-        rule: allow
-        name: Samba
-
     - name: Allow samba for home networks
       ufw:
         rule: allow
         name: Samba
         src: "{{ item }}"
       with_items: "{{ samba_networks }}"
+
+    - name: Restart ufw
+      ufw:
+        state: reloaded
