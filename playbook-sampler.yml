@@ -35,7 +35,7 @@
 
     - name: "Create {{ config_dir }}/example.yml"
       template:
-        src: templates/sampler-example.yml.j2
+        src: templates/sampler/example.yml.j2
         dest: "{{ config_dir }}/example.yml"
         owner: "{{ user_name }}"
         group: "{{ user_name }}"
