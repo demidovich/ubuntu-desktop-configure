@@ -14,36 +14,32 @@ ansible-playbook ./playbook-user.yml
 
 cp my.inventory.example my.inventory
 
-sudo bash
-
-ansible-playbook -i ./my.inventory ./playbook-common.yml
-ansible-playbook -i ./my.inventory ./playbook-ufw.yml
-ansible-playbook -i ./my.inventory ./playbook-samba.yml
-ansible-playbook -i ./my.inventory ./playbook-docker.yml
-ansible-playbook -i ./my.inventory ./playbook-golang.yml
-ansible-playbook -i ./my.inventory ./playbook-vscode.yml
-ansible-playbook -i ./my.inventory ./playbook-laptop.yml
-ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
-ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
-ansible-playbook -i ./my.inventory ./playbook-sampler.yml
-ansible-playbook -i ./my.inventory ./playbook-sound-pipewire.yml
-ansible-playbook -i ./my.inventory ./playbook-yandex-disk.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-common.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-ufw.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-samba.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-docker.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-golang.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-vscode.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-laptop.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-sampler.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-sound-pipewire.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-yandex-disk.yml
 ```
 
-### Golang
-
-Install Golang from source.
+### Golang from source
 
 ```bash
 
-ansible-playbook -i ./my.inventory ./playbook-golang-src.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-golang-src.yml
 ```
 
-### Audio recording
+### Sound recording
 
 ```bash
 
-ansible-playbook -i ./my.inventory ./playbook-soundrecord-reaper.yml
-ansible-playbook -i ./my.inventory ./playbook-soundrecord-vst.yml
-ansible-playbook -i ./my.inventory ./playbook-soundrecord-realtime.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-reaper.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-vst.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-realtime.yml
 ```
