@@ -43,6 +43,7 @@
           - wget
           - tigervnc-viewer
           - fonts-ubuntu-classic
+          - totem
         state: latest
 
     - name: Enabel ufw
