@@ -1,0 +1,24 @@
+---
+- name: "Flameshot"
+  hosts: "flameshot"
+  connection: local
+  become: true
+  gather_facts: yes
+
+  vars:
+    flameshot_user: "{{ ansible_facts['env']['SUDO_USER'] }}"
+
+  tasks:
+
+    - name: Install flameshot
+      apt: 
+        name:
+          - flameshot
+        state: latest
+
+    - name: "Add flameshot launcher"
+      template:
+        src: templates/flameshot/flameshot.desktop.j2
+        dest: "/home/{{ flameshot_user }}/.local/share/applications/flameshot.desktop"
+        owner: "{{ flameshot_user }}"
+        group: "{{ flameshot_user }}"

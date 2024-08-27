@@ -25,6 +25,7 @@ sudo ansible-playbook -i ./my.inventory ./playbook-virtualbox.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-php8.2.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-sampler.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-yandex-disk.yml
+sudo ansible-playbook -i ./my.inventory ./playbook-flameshot.yml
 ```
 
 ### Golang from source
