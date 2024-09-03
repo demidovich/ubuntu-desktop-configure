@@ -24,7 +24,9 @@
           - alacarte
           - ca-certificates
           - firefox
+          - git
           - git-flow
+          - git-lfs
           - gnome-tweaks
           - htop
           - lnav
