@@ -45,6 +45,7 @@
           - tigervnc-viewer
           - fonts-ubuntu-classic
           - totem
+          - gdu
         state: latest
 
     - name: Enabel ufw
