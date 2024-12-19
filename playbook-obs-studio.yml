@@ -1,0 +1,25 @@
+# playbook.yml:
+---
+- name: "OBS Studio, video capturing and streaming"
+  hosts: "vscode"
+  connection: local
+  become: true
+  gather_facts: no
+  tasks:
+
+    - name: Install requirements
+      apt: 
+        name:
+          - v4l2loopback-dkms
+        state: latest
+
+    - name: Add golang repository
+      apt_repository:
+        repo: ppa:obsproject/obs-studio
+        state: present
+
+    - name: Install vscode
+      apt:
+        name:
+          - obs-studio
+        state: latest

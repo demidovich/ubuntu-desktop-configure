@@ -51,3 +51,10 @@ sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-reaper.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-vst.yml
 sudo ansible-playbook -i ./my.inventory ./playbook-soundrecord-realtime.yml
 ```
+
+### Video capturing and streaming
+
+```bash
+
+sudo ansible-playbook -i ./my.inventory ./playbook-obs-studio.yml
+```
